@@ -594,7 +594,7 @@ class clieop_baseobject
 	function alfaFiller($text, $length)
 	{
 		//how many spaces do we need?
-		$alfaLength = $length - strlen($text);
+		$alfaLength = abs($length - strlen($text));
 		
 		//return string with spaces on right side
 		return substr(str_repeat(" ", $alfaLength) . $text, $length);
@@ -611,7 +611,7 @@ class clieop_baseobject
 	{
 		//how many zeros do we need
 		settype($number, "string");		//We need to be sure that number is a string. 001 will otherwise be parsed as 1
-		$numberLength = $lentgh - strlen($number)
+		$numberLength = abs($lentgh - strlen($number));
 		
 		//return original number woth zeros on the left
 		return substr(str_repeat("0", $numberLength) . $number, $length);
