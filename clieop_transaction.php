@@ -30,7 +30,7 @@ define( "CLIEOP_TRANSACTIE_BETALING", "00" ); 	//betaling transaction type (cred
 *
 * The TransactionPayment class is a data-holder for the main clieop class.
 *
-* @version $Revision 1.0 $
+* @version $Revision$
 * @access public
 * @package Payment_Clieop
 * @author Dave Mertens <dmertens@zyprexia.com>
@@ -40,7 +40,7 @@ class TransactionPayment
 	/**
 	* @var string
 	* @access private
-	* @values 00 (creditor) or 10 (Debtor)
+	* @values 0000 (creditor) or 1002 (Debtor)
 	*/
 	var $_TransactionType;
 
