@@ -126,8 +126,141 @@ class ClieopPayment extends clieop_baseobject
 		//init vars
 		$this->_ProcessDate = "000000";	//process ASAP
 		$this->_BatchNumber = 1;
+		$this->_Test = "T";
 		return 1;
 	}
+	
+	/**
+	* INFOCODE: 0100
+	* Writes transaction header
+	* @param string transType			- Type of transaction ('0000' for betaling, '1002' for incasso)
+	* @param integer amount				- Payment amount in Eurocents
+	* @param string accountNumberSource	- Source bankaccount number 
+	* @param string accountNumberDest	- Destination bankaccount number
+	* @access private
+	* @return string
+	*/
+	function writeTransactieInfo($transType, $amount, $accountNumberSource, $accountNumberDest)
+	{
+		$text  = "0100";										//infocode
+		$text .= "A";											//variantcode
+		$text .= $this->numFiller($transType, 4);				//transactiesoort
+		$text .= $this->numFiller($amount, 12);					//Bedrag
+		$text .= $this->numFiller($accountNumberSource, 10);	//Reknr betaler
+		$text .= $this->numFiller($accountNumberDest, 10);		//Reknr begunstigde
+		$text .= $this->filler(9);
+		
+		//return clieop line
+		return $text
+	}
+	
+	/**
+	* INFOCODE: 0150
+	* Writes invoice reference clieop line
+	* @param string invoiceReference	- Reference of invoice
+	* @access private
+	* @return string
+	*/
+	function  writeBetalingskenmerkInfo($invoiceReference)
+	{
+		$text  = "0150";									//infocode
+		$text .= "A";										//variantcode
+		$text .= $this->alfaFiller($invoiceReference, 16);	//betalings kenmerk
+		$text .= $this->filler(29);
+		
+		//return clieop line
+		return $text;
+	}	
+
+	/**
+	* INFOCODE: 0160
+	* Writes an description for the clieop file
+	* @param string description	- Description of payment (Can be called maximum 4 times!)
+	* @access private
+	* @return string
+	*/
+	function writeOmschrijvingInfo($description)
+	{
+		$text  = "0160";									//infocode
+		$text .= "A";										//variantcode
+		$text .= $this->alfaFiller($description, 32);		//omschrijving van post
+		$text .= $this->filler(13);
+		
+		//return clieop line
+		return $text;
+	}
+	
+	/**
+	* INFOCODE: 0170
+	* Write the creditor name record 
+	* @param string name 	- Name of creditor
+	* @access private
+	* @return string
+	*/
+	function writeNaambegunstigdeInfo($name)
+	{
+		$text  = "0170";									//infocode
+		$text .= "B";										//variantcode
+		$text .= $this->alfaFiller($name, 35);				//naam begunstigde
+		$text .= $this->filler(10);
+		
+		//reurn clieop line
+		return $text;
+	}
+
+	/**
+	* INFOCODE: 0173
+	* Write the creditor city record 
+	* @param string city 	- City of creditor
+	* @access private
+	* @return string
+	*/
+	function writeWoonplaatsbegunstigdeInfo($city)
+	{
+		$text  = "0173";									//infocode
+		$text .= "B";										//variantcode
+		$text .= $this->alfaFiller($city, 35);				//woonplaats begunstigde
+		$text .= $this->filler(10);
+		
+		//reurn clieop line
+		return $text;
+	}
+	/**
+	* INFOCODE: 0110
+	* Write the debtor name record 
+	* @param string name 	- Name of debtor
+	* @access private
+	* @return string
+	*/
+	function writeNaambetalerInfo($name)
+	{
+		$text  = "0110";									//infocode
+		$text .= "B";										//variantcode
+		$text .= $this->alfaFiller($name, 35);				//naam betaler
+		$text .= $this->filler(10);
+		
+		//reurn clieop line
+		return $text;
+	}
+
+	/**
+	* INFOCODE: 0113
+	* Write the debtor city record 
+	* @param string city 	- City of debtor
+	* @access private
+	* @return string
+	*/
+	function writeWoonplaatsbetalerInfo($city)
+	{
+		$text  = "0113";									//infocode
+		$text .= "B";										//variantcode
+		$text .= $this->alfaFiller($city, 35);				//woonplaats betaler
+		$text .= $this->filler(10);
+		
+		//reurn clieop line
+		return $text;
+	}
+
 }
 
 

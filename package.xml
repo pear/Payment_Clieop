@@ -3,8 +3,8 @@
 <!-- do not use the "Type" attribute here, that one is only for
      generated package.xml files -->
 <package version="1.0">
-  <name>Clieop</name>
-  <summary>Clieop03 generating class for Ducth banking software</summary>
+  <name>Payment_Clieop</name>
+  <summary>Clieop03 generating class for Dutch banking software</summary>
   <maintainers>
     <maintainer>
       <user>zyprexia</user>
