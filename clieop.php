@@ -192,9 +192,9 @@ class ClieopPayment extends clieop_baseobject
 	function writeClieop()
 	{
 		$text  = $this->writeBestandsvoorloopInfo($this->_SenderIdent, $this->_BatchNumber);
+		$text .= $this->writeBatchvoorloopInfo($this->_PrincipalAccountNumber, $this->_BatchNumber);
 		$text .= $this->writeOpdrachtgeverInfo($this->_ProcessDate, $this->_PrincipalName);
 		$text .= $this->writeVasteomschrijvingInfo($this->_FixedDescription);
-		$text .= $this->writeBatchvoorloopInfo($this->_PrincipalAccountNumber, $this->_BatchNumber);
 		$text .= $this->_TransactionText;
 		$text .= $this->writeBatchsluitInfo();
 		$text .= $this->writeBestandssluitInfo();
