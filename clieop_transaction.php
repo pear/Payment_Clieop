@@ -99,7 +99,6 @@ class TransactionPayment
 	*/
 	var $_Desciption;
 	
-
 	/**
 	* Constructor for class
 	* @param string transactionType		- constant CLIEOP_TRANSACTIE_INCASSO or CLIEOP_TRANSACTIE_BETALING
