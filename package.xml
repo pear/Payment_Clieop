@@ -27,6 +27,7 @@
      </dir>
      <dir name="Samples" baseinstalldir="Payment_Clieop">
       <file role="php">debtor.php</file>
+      <file role="php">creditor.php</file>
      </dir>
     </filelist>
   </release>
