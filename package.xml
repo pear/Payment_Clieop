@@ -13,14 +13,27 @@
       <email>dmertens@zyprexia.com</email>
     </maintainer>
   </maintainers>
-  <release>
-    <version>0.1</version>
-    <date>2002-04-20</date>
-    <license>PHP</license>
-    <state>stable</state>
-    <notes>
-     Please note that public function names are partly in Dutch. This is because also the clieop data strings has a dutch names. (batchvoorloopinfo, transactieinfo, etc).</notes>
-    <filelist>
+  <changelog>
+   <release>
+     <version>0.1</version>
+     <date>2002-04-20</date>
+     <license>PHP</license>
+     <state>stable</state>
+     <notes>
+      Please note that public function names are partly in Dutch. This is because also the clieop data strings has a dutch names. (batchvoorloopinfo, transactieinfo, etc).</notes>
+    </release>
+   </changelog>
+   <release> 
+     <version>0.1.1</version>
+     <date>2003-01-28</date>
+     <license>PHP</license>
+     <state>stable</state>
+     <notes>
+* Bug fix release *
+- Fixed name/city creditor
+- Fixed description per transaction
+     </notes>
+     <filelist>
      <dir name="/" baseinstalldir="Payment_Clieop">
       <file role="php">clieop.php</file>
       <file role="php">clieop_transaction.php</file>
