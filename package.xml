@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE package SYSTEM "../package.dtd">
+<!-- do not use the "Type" attribute here, that one is only for
+     generated package.xml files -->
+<package version="1.0">
+  <name>Clieop</name>
+  <summary>Clieop03 generating class for Ducth banking software</summary>
+  <maintainers>
+    <maintainer>
+      <user>zyprexia</user>
+      <name>Dave Mertens</name>
+      <email>dmertens@zyprexia.com</email>
+    </maintainer>
+  </maintainers>
+  <release>
+    <version>0.1</version>
+    <date>2002-04-02</date>
+    <notes>
+    	The generated clieop file is only useable in
+    	Dutch banking software and Official Ducth banks
+    </notes>
+    <filelist>
+      <file role="php">Clieop.php</file>
+      <file role="php">Clieop_transaction.php</file>
+    </filelist>
+  </release>
+</package>
