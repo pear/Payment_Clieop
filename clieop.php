@@ -162,7 +162,7 @@ class ClieopPayment extends clieop_baseobject
 			
 			//maximum 4 description lines (0160)
 			$descArray = $paymentObject->getDescription();
-			while(list(,$desc) = each($descArray))
+			while(list($id,$desc) = each($descArray))
 			{	
 				$text .= $this->writeOmschrijvingInfo($desc);	
 			}
@@ -171,10 +171,10 @@ class ClieopPayment extends clieop_baseobject
 			if (strtoupper($this->_TransactionType) == "CREDITOR")
 			{
 					//name of creditor (0170)
-					$text .= $this->writeNaambegunstigdeInfo($paymentObject->getName);
+					$text .= $this->writeNaambegunstigdeInfo($paymentObject->getName());
 			
 					//city of creditor (0173)
-					$text .= $this->writeWoonplaatsbegunstigdeInfo($paymentObject->getCity);
+					$text .= $this->writeWoonplaatsbegunstigdeInfo($paymentObject->getCity());
 			}
 			
 			//do some calculations
