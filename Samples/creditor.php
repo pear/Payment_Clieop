@@ -27,10 +27,7 @@ $creditor->setAccountNumberDest("123456789");					// principal bank account numb
 $creditor->setAmount(6900);										// amount in Eurocents (EUR 69.00)
 $creditor->setName("Dave Mertens");								// Name of creditor (holder of source account)
 $creditor->setCity("Rotterdam");								// City of creditor
-
-#descriptions aren't working at the moment.. Keep as TODO!
-//$creditor->setDescription("Ordernumber: 8042");				// Just some info
-//$creditor->setDescription("Customernumber: 17863");			// about the transaction
+$creditor->setDescription("Like we promised, your money");				// Just some info
 
 //assign creditor record to clieop
 $clieopFile->addPayment($creditor);

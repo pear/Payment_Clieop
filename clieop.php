@@ -162,12 +162,9 @@ class ClieopPayment extends clieop_baseobject
 			
 			//maximum 4 description lines (0160)
 			$descArray = $paymentObject->getDescription();
-			if (sizeof($descArray) > 0)
-			{
-				while(list($desc) = @each($descArray))
-				{	
-					$text .= $this->writeOmschrijvingInfo($desc);	
-				}
+			while(list(,$desc) = each($descArray))
+			{	
+				$text .= $this->writeOmschrijvingInfo($desc);	
 			}
 			
 			//routine splits here into creditor and debtor
@@ -299,9 +296,11 @@ class ClieopPayment extends clieop_baseobject
 		{
 			case "00":	//BETALING
 				$this->_TransactionType = "CREDITOR";
+				$this->_TransactionCode = "00";
 				break;
 			case "10":	//INCASSO
 				$this->_TransactionType = "DEBTOR";
+				$this->_TransactionCode = "10";
 				break;
 		}
 	}
@@ -507,7 +506,7 @@ class ClieopPayment extends clieop_baseobject
 	{	
 		$text  = "0010";										//infocode
 		$text .= "B";											//variantcode
-		$text .= $this->numFiller($this->_TransactionType, 2);	//transactiegroep (00 = betaling, 10 = incasso)
+		$text .= $this->numFiller($this->_TransactionCode, 2);	//transactiegroep (00 = betaling, 10 = incasso)
 		$text .= $this->numFiller($principalAccountNumber, 10);	//rekening nummer opdrachtgever
 		$text .= $this->numFiller($batchCount, 4);				//batch volgnummer
 		$text .= "EUR";											//aanlevering muntsoort

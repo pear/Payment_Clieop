@@ -27,10 +27,8 @@ $debtor->setAccountNumberDest("123456789");						// principal bank account numbe
 $debtor->setAmount(12995);										// amount in Eurocents (EUR 129.95)
 $debtor->setName("Dave Mertens");								// Name of debtor (holder of source account)
 $debtor->setCity("Rotterdam");									// City of debtor
-
-#descriptions aren't working at the moment.. Keep as TODO!
-//$debtor->setDescription("Ordernumber: 8042");					// Just some info
-//$debtor->setDescription("Customernumber: 17863");				// about the transaction
+$debtor->setDescription("Ordernumber: 8042");					// Just some info
+$debtor->setDescription("Customernumber: 17863");				// about the transaction
 
 //assign debtor record to clieop
 $clieopFile->addPayment($debtor);

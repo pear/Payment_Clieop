@@ -1,7 +1,6 @@
 This is the TODO list for clieop development
 
 Version 0.1:
-- description creator in addPayment (clieop.php)
 - Finetune pear documentation for clieop package
 - create pear package and upload to pearweb
 - Create cvs branch V0.1 for Payment_Clieop
