@@ -618,12 +618,12 @@ class clieop_baseobject
 	}
 	
 	/**
-	* Numeric filler
-	* @param integer length	- How many spaces do we need
+	* filler
+	* @param integer length	- How many filler spaces do we need
 	* @return string
 	* @access public
 	*/
-	function Filler($Length)
+	function filler($Length)
 	{
 		return str_repeat(" ", $Length) . "\n";
 	}
