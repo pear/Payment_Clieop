@@ -625,7 +625,7 @@ class clieop_baseobject
 	*/
 	function Filler($Length)
 	{
-		return str_repeat(" ", $Length);
+		return str_repeat(" ", $Length) . "\n";
 	}
 }
 
