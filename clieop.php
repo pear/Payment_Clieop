@@ -148,6 +148,16 @@ class ClieopPayment extends clieop_baseobject
 				$paymentObject->getAccountNumberSource,
 				$paymentObject->getAccountNumberDest);
 				
+			// Debtor name ans city
+			if (strtoupper($this->_TransactionType) == "DEBTOR")
+			{
+				//name of debtor (0110)
+				$text .= $this->writeNaambetalerInfo($paymentObject->getName);
+
+				//city of debtor (0113)
+				$text .= $this->writeWoonplaatsbetalerInfo($paymentObject->getCity);
+			}
+			
 			//betalings kenmerk (0150)
 			$text .= $this->writeBetalingskenmerkInfo($paymentObject->getInvoiceReference);
 			
@@ -159,20 +169,13 @@ class ClieopPayment extends clieop_baseobject
 			}
 			
 			//routine splits here into creditor and debtor
-			switch(strtoupper($this->_TransactionType))
+			if (strtoupper($this->_TransactionType) == "CREDITOR")
 			{
-				case "CREDITOR":
 					//name of creditor (0170)
 					$text .= $this->writeNaambegunstigdeInfo($paymentObject->getName);
+			
 					//city of creditor (0173)
 					$text .= $this->writeWoonplaatsbegunstigdeInfo($paymentObject->getCity);
-					break;
-				case "DEBTOR":
-					//name of debtor (0110)
-					$text .= $this->writeNaambetalerInfo($paymentObject->getName);
-					//city of debtor (0113)
-					$text .= $this->writeWoonplaatsbetalerInfo($paymentObject->getCity);
-					break;
 			}
 			
 			//do some calculations
@@ -193,8 +196,8 @@ class ClieopPayment extends clieop_baseobject
 	{
 		$text  = $this->writeBestandsvoorloopInfo($this->_SenderIdent, $this->_BatchNumber);
 		$text .= $this->writeBatchvoorloopInfo($this->_PrincipalAccountNumber, $this->_BatchNumber);
-		$text .= $this->writeOpdrachtgeverInfo($this->_ProcessDate, $this->_PrincipalName);
 		$text .= $this->writeVasteomschrijvingInfo($this->_FixedDescription);
+		$text .= $this->writeOpdrachtgeverInfo($this->_ProcessDate, $this->_PrincipalName);
 		$text .= $this->_TransactionText;
 		$text .= $this->writeBatchsluitInfo();
 		$text .= $this->writeBestandssluitInfo();
