@@ -167,7 +167,7 @@ class ClieopPayment extends clieop_baseobject
 					//city of creditor (0173)
 					$text .= $this->writeWoonplaatsbegunstigdeInfo($paymentObject->getCity);
 					break;
-				case "DEBTOR:
+				case "DEBTOR":
 					//name of debtor (0110)
 					$text .= $this->writeNaambetalerInfo($paymentObject->getName);
 					//city of debtor (0113)
