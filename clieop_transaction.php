@@ -147,7 +147,6 @@ class TransactionPayment
 	* @return integer
 	* @access public
 	*/
-	//property amount (in Eurocents)
 	function getAmount()
 	{
 		return $this->_Amount;

@@ -129,6 +129,196 @@ class ClieopPayment extends clieop_baseobject
 		$this->_Test = "T";
 		return 1;
 	}
+
+	/**
+	* Adds a payment record to the clieop file
+	* @param object paymentObject	- Instance of transactionPayment
+	* @access public
+	* @return void
+	*/
+	function addPayment($paymentObject)
+	{
+		//Only one type of transaction is allowed in a clieop
+		if ($this->_TransactionType == $paymentObject->getPaymentType)
+		{
+			
+			//transactieinfo (0100)
+			$text = $this->writeTransactieInfo($paymentObject->getTransactionType,
+				$paymentObject->getAmount,
+				$paymentObject->getAccountNumberSource,
+				$paymentObject->getAccountNumberDest);
+				
+			//betalings kenmerk (0150)
+			$text .= $this->writeBetalingskenmerkInfo($paymentObject->getInvoiceReference);
+			
+			//maximum 4 description lines (0160)
+			$descArray = $paymentObject->getDescription;
+			while(list($desc) = each($descArray))
+			{	
+				$text .= $this->writeOmschrijvingInfo($desc);	
+			}
+			
+			//routine splits here into creditor and debtor
+			switch(strtoupper($this->_TransactionType))
+			{
+				case "CREDITOR":
+					//name of creditor (0170)
+					$text .= $this->writeNaambegunstigdeInfo($paymentObject->getName);
+					//city of creditor (0173)
+					$text .= $this->writeWoonplaatsbegunstigdeInfo($paymentObject->getCity);
+					break;
+				case "DEBTOR:
+					//name of debtor (0110)
+					$text .= $this->writeNaambetalerInfo($paymentObject->getName);
+					//city of debtor (0113)
+					$text .= $this->writeWoonplaatsbetalerInfo($paymentObject->getCity);
+					break;
+			}
+			
+			//do some calculations
+			$this->_NumberOfTransactions++;
+			//accoutnumber checksum
+			//$this->_AccountChecksum + $paymentObject->getAccountNumberSource + $paymentObject->getAccountNumberDest;
+			$this->_TotalAmount += $paymentObject->getAmount;
+		}
+		$this->_TransactionText .= $text;
+	}
+	
+	/**
+	* Writes complete clieop file
+	* @access public
+	* @return string
+	*/
+	function writeClieop()
+	{
+		$text  = $this->writeBestandsvoorloopInfo($this->_SenderIdent, $this->_BatchNumber);
+		$text .= $this->writeOpdrachtgeverInfo($this->_ProcessDate, $this->_PrincipalName);
+		$text .= $this->writeVasteomschrijvingInfo($this->_FixedDescription);
+		$text .= $this->writeBatchvoorloopInfo($this->_PrincipalAccountNumber, $this->_BatchNumber);
+		$text .= $this->_TransactionText;
+		$text .= $this->writeBatchsluitInfo();
+		$text .= $this->writeBestandssluitInfo();
+		
+		//return clieop file
+		return $text;
+	}
+	
+	/**
+	* property BatchNumber
+	* @param integer Value	- Number of batches send to day (including this one)
+	* @return string
+	* @access public
+	*/
+	function getBatchNumber()
+	{
+		return $this->_BatchNumber;
+	}
+	function setBatchNumber($Value)
+	{
+		$this->_BatchNumber = $Value;
+	}
+	
+	/**
+	* property FixedDescription
+	* @param string Value	- Description which will be added to each transaction payment
+	* @return string
+	* @access public
+	*/
+	function getFixedDescription()
+	{
+		return $this->_FixedDescription;
+	}
+	function setFixedDescription($Value)
+	{
+		$this->_FixedDescription = $Value;
+	}
+	
+	/**
+	* property SenderIdentification
+	* @param string Value	- Identification of sender, free of choice
+	* @return string
+	* @access public
+	*/
+	function getSenderIdentification()
+	{
+		return $this->_SenderIdent;
+	}
+	function setSenderIdentification($Value)
+	{
+		$this->_SenderIdent = $Value;
+	}
+	
+	/**
+	* property PrincipalName
+	* @param string Value	- Name of principal
+	* @return string
+	* @access public
+	*/
+	function getPrincipalName()
+	{
+		return $this->_PrincipalName;
+	}
+	function setPrincipalName($Value)
+	{
+		$this->_PrincipalName = $Value;
+	}
+	
+	/**
+	* property PrincipalAccountNumber
+	* @param string Value	- Account number of principal
+	* @return string
+	* @access public
+	*/
+	function getPrincipalAccountNumber()
+	{
+		return $this->_PrincipalAccountNumber;
+	}
+	function setPrincipalAccountNumber($Value)
+	{
+		$this->_PrincipalAccountNumber = $Value;
+	}
+	
+	/**
+	* property TransactionType
+	* @param string Value	- transaction type
+	* @return string
+	* @access public
+	*/
+	function getTransactionType()
+	{
+		return $this->_TransactionType;
+	}
+	function setTransactionType($Value)
+	{
+		switch($Value)
+		{
+			case "00":	//BETALING
+				$this->_TransactionType = "CREDITOR";
+				break;
+			case "10":	//INCASSO
+				$this->_TransactionType = "DEBTOR";
+				break;
+		}
+	}
+	
+	/**
+	* property Test
+	* @param boolean Value	- true = test clieop, false = production clieop
+	* @return string
+	* @access public
+	*/
+	function getTest()
+	{
+		return $this->_Test;
+	}
+	function setTest($Value)
+	{
+		if ($Value == false)
+			$this->_Test = "P";	//production clieop
+		else
+			$this->_Test = "T";	//test clieop
+	}
+		
 	
 	/**
 	* INFOCODE: 0100
@@ -325,8 +515,7 @@ class ClieopPayment extends clieop_baseobject
 	/**
 	* INFOCODE: 0020
 	* Write clieop batchvoorloopinfo
-	* @param string principalAccountNumber	- Account number of principal
-	* @param integer batchCount				- Number of batches send this month (including this one) 
+	* @access string description	- Fixed description for all payments
 	* @access private
 	* @return string
 	*/
