@@ -260,7 +260,127 @@ class ClieopPayment extends clieop_baseobject
 		//reurn clieop line
 		return $text;
 	}
+	
+	/**
+	* INFOCODE: 0001
+	* Write clieop header 
+	* @param string identifier	- 5 char sender identification (free of choice)
+	* @param integer batchCount	- Numbers of clieop batches send today + 1
+	* @access private
+	* @return string
+	*/
+	function writeBestandsvoorloopInfo($identifier, $batchCount)
+	{
+		$text  = "0001";										//infocode
+		$text .= "A";											//variantcode
+		$text .= date("dmy");									//aanmaak datum
+		$text .= "CLIEOP03";									//bestands naam
+		$text .= $this->alfaFiller($identifier, 5);				//afzender identificatie
+		$text .= date("d") . $this->numFiller($batchCount, 2);	//bestands identificatie 
+		$text .= "1";											//duplicaat code
+		$text .= $this->filler(21);	
+		
+		//return cliep line
+		return $text;
+	}
+	
+	/**
+	* INFOCODE: 9999
+	* Write clieop footer 
+	* @access private
+	* @return string
+	*/
+	function writeBestandssluitInfo()
+	{
+		$text  = "9999";									//infocode
+		$text .= "A";										//variantcode
+		$text .= $this->filler(45);
+		
+		//return cleip line
+		return $text;
+	}
+	
+	/**
+	* INFOCODE: 0010
+	* Write clieop batchvoorloopinfo
+	* @param string principalAccountNumber	- Account number of principal
+	* @param integer batchCount				- Number of batches send this month (including this one) 
+	* @access private
+	* @return string
+	*/
+	function writeBatchvoorloopInfo($principalAccountNumber, $batchCount)
+	{	
+		$text  = "0010";										//infocode
+		$text .= "B";											//variantcode
+		$text .= $this->numFiller($this->_TransactionType, 2);	//transactiegroep (00 = betaling, 10 = incasso)
+		$text .= $this->numFiller($principalAccountNumber, 10);	//rekening nummer opdrachtgever
+		$text .= $this->numFiller($batchCount, 4);				//batch volgnummer
+		$text .= "EUR";											//aanlevering muntsoort
+		$text .= $this->filler(26);
+		
+		//return clieop line
+		return $text;
+	}
+	
+	/**
+	* INFOCODE: 0020
+	* Write clieop batchvoorloopinfo
+	* @param string principalAccountNumber	- Account number of principal
+	* @param integer batchCount				- Number of batches send this month (including this one) 
+	* @access private
+	* @return string
+	*/
+	function writeVasteomschrijvingInfo($description)
+	{
+		$text  = "0020";										//infocode
+		$text .= "A";											//variantcode
+		$text .= $this->alfaFiller($description, 32)			//vaste omschrijving
+		$text .= $this->filler(13);
+		
+		//return clieop line
+		return $text;
+	}
 
+	/**
+	* INFOCODE: 0030
+	* Write opdrachtegever clieop line
+	* @param date processDate		- Process date in DDMMYY-format
+	* @param string principalName	- Name of pricipal
+	* @access private
+	* @return string
+	*/
+	function writeOpdrachtgeverInfo($processDate, $principalName)
+	{
+		$text  = "0030";										//infocode
+		$text .= "B";											//variantcode
+		$text .= "1";											//NAWcode
+		$text .= $this->numFiller($processdate, 6);				//verwerkings datum
+		$text .= $this->alfaFiller($principalName, 35);			//naam opdracht gever
+		$text .= $this->_Test;									//TESTcode (T = Test, P = Productie)
+		$text .= $this->filler(2);
+		
+		//return clieop line
+		return $text;
+	}
+	
+	/**
+	* INFOCODE: 9990
+	* Write clieop batchsluitinfo
+	* @access private
+	* @return string
+	*/
+	function writeBatchsluitInfo()
+	{
+		$text  = "9990";											//infocode
+		$text .= "A";												//variantcode
+		$text .= $this->numFiller($this->_TotalAmount, 18);			//Totaalbedrag clieop
+		$text .= $this->numFiller($this->_AccountChecksum, 10);		//checksum van rekeningnummers
+		$text .= $this->numFiller($this->_NumberOfTransactions, 7);	//Aantal transactie posten
+		$text .= $this->filler(10);
+		
+		//return clieop line
+		return $text;
+	}
 }
 
 
