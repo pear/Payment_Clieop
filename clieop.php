@@ -139,33 +139,35 @@ class ClieopPayment extends clieop_baseobject
 	function addPayment($paymentObject)
 	{
 		//Only one type of transaction is allowed in a clieop
-		if ($this->_TransactionType == $paymentObject->getPaymentType)
+		if ($this->_TransactionType == $paymentObject->getPaymentType())
 		{
-			
 			//transactieinfo (0100)
-			$text = $this->writeTransactieInfo($paymentObject->getTransactionType,
-				$paymentObject->getAmount,
-				$paymentObject->getAccountNumberSource,
-				$paymentObject->getAccountNumberDest);
+			$text = $this->writeTransactieInfo($paymentObject->getTransactionType(),
+				$paymentObject->getAmount(),
+				$paymentObject->getAccountNumberSource(),
+				$paymentObject->getAccountNumberDest());
 				
 			// Debtor name ans city
 			if (strtoupper($this->_TransactionType) == "DEBTOR")
 			{
 				//name of debtor (0110)
-				$text .= $this->writeNaambetalerInfo($paymentObject->getName);
+				$text .= $this->writeNaambetalerInfo($paymentObject->getName());
 
 				//city of debtor (0113)
-				$text .= $this->writeWoonplaatsbetalerInfo($paymentObject->getCity);
+				$text .= $this->writeWoonplaatsbetalerInfo($paymentObject->getCity());
 			}
 			
 			//betalings kenmerk (0150)
-			$text .= $this->writeBetalingskenmerkInfo($paymentObject->getInvoiceReference);
+			$text .= $this->writeBetalingskenmerkInfo($paymentObject->getInvoiceReference());
 			
 			//maximum 4 description lines (0160)
-			$descArray = $paymentObject->getDescription;
-			while(list($desc) = each($descArray))
-			{	
-				$text .= $this->writeOmschrijvingInfo($desc);	
+			$descArray = $paymentObject->getDescription();
+			if (sizeof($descArray) > 0)
+			{
+				while(list($desc) = @each($descArray))
+				{	
+					$text .= $this->writeOmschrijvingInfo($desc);	
+				}
 			}
 			
 			//routine splits here into creditor and debtor
@@ -181,8 +183,8 @@ class ClieopPayment extends clieop_baseobject
 			//do some calculations
 			$this->_NumberOfTransactions++;
 			//accoutnumber checksum
-			//$this->_AccountChecksum + $paymentObject->getAccountNumberSource + $paymentObject->getAccountNumberDest;
-			$this->_TotalAmount += $paymentObject->getAmount;
+			$this->_AccountChecksum += (int)$paymentObject->getAccountNumberSource() + (int)$paymentObject->getAccountNumberDest();
+			$this->_TotalAmount += $paymentObject->getAmount();
 		}
 		$this->_TransactionText .= $text;
 	}
@@ -344,7 +346,7 @@ class ClieopPayment extends clieop_baseobject
 		$text .= $this->filler(9);
 		
 		//return clieop line
-		return $text
+		return $text;
 	}
 	
 	/**
@@ -362,7 +364,7 @@ class ClieopPayment extends clieop_baseobject
 		$text .= $this->filler(29);
 		
 		//return clieop line
-		return $text;
+		if (strlen($invoiceReference) > 0) return $text;	//only return string if there's really a value
 	}	
 
 	/**
@@ -526,11 +528,11 @@ class ClieopPayment extends clieop_baseobject
 	{
 		$text  = "0020";										//infocode
 		$text .= "A";											//variantcode
-		$text .= $this->alfaFiller($description, 32)			//vaste omschrijving
+		$text .= $this->alfaFiller($description, 32);			//vaste omschrijving
 		$text .= $this->filler(13);
 		
 		//return clieop line
-		return $text;
+		if (strlen($description) > 0) return $text;				//only return string if there is REALLY a description
 	}
 
 	/**
@@ -600,7 +602,7 @@ class clieop_baseobject
 		$alfaLength = abs($length - strlen($text));
 		
 		//return string with spaces on right side
-		return substr(str_repeat(" ", $alfaLength) . $text, $length);
+		return substr($text . str_repeat(" ", $alfaLength), 0, $length);
 	}
 	
 	/**
@@ -614,10 +616,10 @@ class clieop_baseobject
 	{
 		//how many zeros do we need
 		settype($number, "string");		//We need to be sure that number is a string. 001 will otherwise be parsed as 1
-		$numberLength = abs($lentgh - strlen($number));
+		$numberLength = abs($length - strlen($number));
 		
 		//return original number woth zeros on the left
-		return substr(str_repeat("0", $numberLength) . $number, $length);
+		return substr(str_repeat("0", $numberLength) . $number, -$length);
 	}
 	
 	/**

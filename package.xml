@@ -4,7 +4,8 @@
      generated package.xml files -->
 <package version="1.0">
   <name>Payment_Clieop</name>
-  <summary>Clieop03 generating class for Dutch banking software</summary>
+  <description>Clieop03 generation classes</description>
+  <summary>These classes can create a clieop03 file for you which you can send to a Dutch Bank. Ofcourse you need also a Dutch bank account.</summary>
   <maintainers>
     <maintainer>
       <user>zyprexia</user>
@@ -14,14 +15,19 @@
   </maintainers>
   <release>
     <version>0.1</version>
-    <date>2002-04-02</date>
+    <date>2002-04-20</date>
+    <license>PHP</license>
+    <state>stable</state>
     <notes>
-    	The generated clieop file is only useable in
-    	Dutch banking software and Official Ducth banks
-    </notes>
+     Please note that public function names are partly in Dutch. This is because also the clieop data strings has a dutch names. (batchvoorloopinfo, transactieinfo, etc).</notes>
     <filelist>
-      <file role="php">Clieop.php</file>
-      <file role="php">Clieop_transaction.php</file>
+     <dir name="/" baseinstalldir="Payment_Clieop">
+      <file role="php">clieop.php</file>
+      <file role="php">clieop_transaction.php</file>
+     </dir>
+     <dir name="Samples" baseinstalldir="Payment_Clieop">
+      <file role="php">debtor.php</file>
+     </dir>
     </filelist>
   </release>
 </package>

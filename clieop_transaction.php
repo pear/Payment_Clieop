@@ -117,6 +117,7 @@ class TransactionPayment
 	*/
 	function TransactionPayment($transactionType)
 	{
+		$this->_Description = array();
 		if ($transactionType == "00")
 		{
 			//creditor payment
@@ -191,7 +192,7 @@ class TransactionPayment
 	{
 		return $this->_AccountNumberDest;
 	}
-	function setAccountNumberDest($Value);
+	function setAccountNumberDest($Value)
 	{
 		$this->_AccountNumberDest = $Value;
 	}
@@ -206,7 +207,7 @@ class TransactionPayment
 	{
 		return $this->_InvoiceReference;
 	}
-	function setInvoiceReference(Value);
+	function setInvoiceReference($Value)
 	{
 		$this->_InvoiceReference = $Value;
 	}
@@ -253,7 +254,7 @@ class TransactionPayment
 		//return description array
 		return $this->_Description;	
 	}
-	function setDesciption($Value)
+	function setDescription($Value)
 	{
 		//only 4 descriptions are allowed for a payment post
 		if (sizeof($this->_Description) < 5)
