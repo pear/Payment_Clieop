@@ -1,0 +1,17 @@
+This is the TODO list for clieop development
+
+Version 0.1:
+- Create a sample for creditor payment
+- Finetune pear documentation for clieop package
+- create pear package and upload to pearweb
+- Create cvs branch V0.1 for Payment_Clieop
+
+Version 0.2:
+- Split up clieopPayment into clieopHeader and clieopBatch (support for multiple batches)
+- Keep clieopPayment for compabilty and single batch clieops
+- Support for process date. Maximum 30 in teh future.
+- Create extra chapters for clieopBatch and ClieopHeader
+- Create Entrust mandate class. This class should create a mandate based on clieopPayment or clieopHeader class (After $object->writeClieop)
+
+
+
