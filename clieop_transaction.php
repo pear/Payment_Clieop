@@ -19,7 +19,17 @@
 // $Id$
 
 //Define some constants for easy programming  ;-)
+
+/**
+* Constant for debtor transactions
+* @const CLIEOP_TRANSACTIE_INCASSO Clieop transaction code for debtor transactions
+*/
 define( "CLIEOP_TRANSACTIE_INCASSO", "10" );	//Incasso transaction type (debtor)
+
+/**
+* Constant for creditor transactions
+* @const CLIEOP_TRANSACTIE_BETALING Clieop transaction code for creditor transactions
+*/
 define( "CLIEOP_TRANSACTIE_BETALING", "00" ); 	//betaling transaction type (creditor)
 
 /**
