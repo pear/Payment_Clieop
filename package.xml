@@ -26,8 +26,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="http://www.php.net/license">PHP</license>
  <notes>
- * Fix Bug #2854: mistype [cellog]
- * Fix Bug #8410: attribute not initilised [cellog]
  </notes>
  <contents>
   <dir name="/" baseinstalldir="Payment_Clieop">
