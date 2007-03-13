@@ -1,47 +1,86 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
-<!-- do not use the "Type" attribute here, that one is only for
-     generated package.xml files -->
-<package version="1.0">
-  <name>Payment_Clieop</name>
-  <description>Clieop03 generation classes</description>
-  <summary>These classes can create a clieop03 file for you which you can send to a Dutch Bank. Ofcourse you need also a Dutch bank account.</summary>
-  <maintainers>
-    <maintainer>
-      <user>zyprexia</user>
-      <name>Dave Mertens</name>
-      <email>dmertens@zyprexia.com</email>
-    </maintainer>
-  </maintainers>
-  <changelog>
-   <release>
-     <version>0.1</version>
-     <date>2002-04-20</date>
-     <license>PHP</license>
-     <state>stable</state>
-     <notes>
-      Please note that public function names are partly in Dutch. This is because also the clieop data strings has a dutch names. (batchvoorloopinfo, transactieinfo, etc).</notes>
-    </release>
-   </changelog>
-   <release> 
-     <version>0.1.1</version>
-     <date>2003-01-28</date>
-     <license>PHP</license>
-     <state>stable</state>
-     <notes>
-* Bug fix release *
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.5.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Payment_Clieop</name>
+ <channel>pear.php.net</channel>
+ <summary>These classes can create a clieop03 file for you which you can send to a Dutch Bank. Ofcourse you need also a Dutch bank account.</summary>
+ <description>Clieop03 generation classes
+ </description>
+ <lead>
+  <name>Dave Mertens</name>
+  <user>zyprexia</user>
+  <email>dmertens@zyprexia.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2007-03-12</date>
+ <time>22:53:44</time>
+ <version>
+  <release>0.1.2</release>
+  <api>0.1.1</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP</license>
+ <notes>
+ * Fix Bug #2854: mistype [cellog]
+ * Fix Bug #8410: attribute not initilised [cellog]
+ </notes>
+ <contents>
+  <dir name="/" baseinstalldir="Payment_Clieop" >
+   <dir name="Samples">
+    <filename="creditor.php" role="php" />
+    <file name="debtor.php" role="php" />
+   </dir> <!-- //Samples -->
+   <file name="clieop.php" role="php" />
+   <file name="clieop_transaction.php" role="php" />
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>4.0.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>0.1</release>
+    <api>0.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2002-04-20</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>Please note that public function names are partly in Dutch. This is because also the clieop data strings has a dutch names. (batchvoorloopinfo, transactieinfo, etc).
+
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.1.1</release>
+    <api>0.1.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2003-01-28</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>* Bug fix release *
 - Fixed name/city creditor
 - Fixed description per transaction
-     </notes>
-     <filelist>
-     <dir name="/" baseinstalldir="Payment_Clieop">
-      <file role="php">clieop.php</file>
-      <file role="php">clieop_transaction.php</file>
-     </dir>
-     <dir name="Samples" baseinstalldir="Payment_Clieop">
-      <file role="php">debtor.php</file>
-      <file role="php">creditor.php</file>
-     </dir>
-    </filelist>
+   </notes>
   </release>
+ </changelog>
 </package>
