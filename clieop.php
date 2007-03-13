@@ -99,6 +99,12 @@ class ClieopPayment extends clieop_baseobject
 	var $_Description;
 
 	/**
+	* @var int
+	* @access private
+	*/
+	var $_NumberOfTransactions = 0;
+
+	/**
 	* @var date (in DDMMYY format)
 	* @access private
 	*/
