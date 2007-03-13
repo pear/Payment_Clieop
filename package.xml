@@ -30,9 +30,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  * Fix Bug #8410: attribute not initilised [cellog]
  </notes>
  <contents>
-  <dir name="/" baseinstalldir="Payment_Clieop" >
+  <dir name="/" baseinstalldir="Payment_Clieop">
    <dir name="Samples">
-    <filename="creditor.php" role="php" />
+    <file name="creditor.php" role="php" />
     <file name="debtor.php" role="php" />
    </dir> <!-- //Samples -->
    <file name="clieop.php" role="php" />
