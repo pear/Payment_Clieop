@@ -547,7 +547,7 @@ class ClieopPayment extends clieop_baseobject
 		$text  = "0030";										//infocode
 		$text .= "B";											//variantcode
 		$text .= "1";											//NAWcode
-		$text .= $this->numFiller($processdate, 6);				//verwerkings datum
+		$text .= $this->numFiller($processDate, 6);				//verwerkings datum
 		$text .= $this->alfaFiller($principalName, 35);			//naam opdracht gever
 		$text .= $this->_Test;									//TESTcode (T = Test, P = Productie)
 		$text .= $this->filler(2);
