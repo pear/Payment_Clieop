@@ -19,7 +19,7 @@
 // $Id$
 /*
  Please note that public function names are partly in Dutch. This is because 
- also the clieop data strings has a dutch names. (batchvoorloopinfo, transactieinfo, etc).
+ also the clieop data strings has dutch names. (batchvoorloopinfo, transactieinfo, etc).
  */
 
 /**
@@ -241,6 +241,21 @@ class ClieopPayment extends clieop_baseobject
 		$this->_FixedDescription = $Value;
 	}
 	
+	/**
+	* property ProcessDate 
+	* @param string Value	- Date in DDMMYY format, required by some banks. Default is 000000 ('as soon as possible').
+	* @return string
+	* @access public
+	*/
+	function getProcessDate()
+	{
+		return $this->_ProcessDate;
+	}
+	function setProcessDate($Value)
+	{
+		$this->_ProcessDate = $Value;
+	}
+
 	/**
 	* property SenderIdentification
 	* @param string Value	- Identification of sender, free of choice
