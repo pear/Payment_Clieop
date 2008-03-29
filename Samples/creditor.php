@@ -30,8 +30,19 @@ $creditor->setCity("Rotterdam");								// City of creditor
 $creditor->setDescription("Like we promised, your money");				// Just some info
 
 //assign creditor record to clieop
-$clieopFile->addPayment($creditor);
+$result = $clieopFile->addPayment($creditor);
+if (PEAR::isError($result))
+{
+	echo "Error from addPayment: ".$result->getMessage()."\n";
+}
 
 //Create clieop file
-echo $clieopFile->writeClieop();
+$result = $clieopFile->writeClieop();
+if (PEAR::isError($result))
+{
+	echo "Error from writeClieop: ".$result->getMessage()."\n";
+}
+
+echo $result;
+
 ?>

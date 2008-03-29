@@ -154,7 +154,7 @@ class TransactionPayment
 
 	/**
 	* Property amount (in Eurocents)
-	* @param integer Value	- Payment amount in euro cents (Rounded on 2 digits)
+	* @param integer Value	- Payment amount in euro cents (Rounded on 2 digits). Must be a positive number.
 	* @return integer
 	* @access public
 	*/
@@ -164,7 +164,7 @@ class TransactionPayment
 	}
 	function setAmount($Value)
 	{
-		$this->_Amount = $Value;	
+		$this->_Amount = $Value;
 	}
 	
 	/**

@@ -31,8 +31,18 @@ $debtor->setDescription("Ordernumber: 8042");					// Just some info
 $debtor->setDescription("Customernumber: 17863");				// about the transaction
 
 //assign debtor record to clieop
-$clieopFile->addPayment($debtor);
+$result = $clieopFile->addPayment($debtor);
+if (PEAR::isError($result)) {
+	echo "Error from addPayment: ".$result->getMessage()."\n";
+}
+
 
 //Create clieop file
-echo $clieopFile->writeClieop();
+$result = $clieopFile->writeClieop();
+if (PEAR::isError($result)) {
+	echo "Error from writeClieop: ".$result->getMessage()."\n";
+}
+
+echo $result;
+	
 ?>

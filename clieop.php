@@ -22,14 +22,23 @@
  also the clieop data strings has dutch names. (batchvoorloopinfo, transactieinfo, etc).
  */
 
+
 /**
-* Main clieop class
-*
-* @version $Revision$
-* @access public
-* @author Dave Mertens <dmertens@zyprexia.com>
-* @package Payment_Clieop
-*/
+ * require PEAR
+ *
+ * This package depends on PEAR to raise errors.
+ */
+require_once 'PEAR.php';
+
+
+/**
+ * Main clieop class
+ *
+ * @version $Revision$
+ * @access public
+ * @author Dave Mertens <dmertens@zyprexia.com>
+ * @package Payment_Clieop
+ */
 class ClieopPayment extends clieop_baseobject
 {
 	/**
@@ -73,12 +82,6 @@ class ClieopPayment extends clieop_baseobject
 	* @access private
 	*/
 	var $_BatchNumber;
-
-	/**
-	* @var integer
-	* @access private
-	*/
-	var $_TransactionCount;
 
 	/**
 	* @var integer
@@ -140,65 +143,87 @@ class ClieopPayment extends clieop_baseobject
 	* Adds a payment record to the clieop file
 	* @param object paymentObject	- Instance of transactionPayment
 	* @access public
-	* @return void
+	* @return mixed true on success or PEAR_Error object
 	*/
 	function addPayment($paymentObject)
 	{
-		//Only one type of transaction is allowed in a clieop
-		if ($this->_TransactionType == $paymentObject->getPaymentType())
+		if (is_null($paymentObject))
 		{
-			//transactieinfo (0100)
-			$text = $this->writeTransactieInfo($paymentObject->getTransactionType(),
-				$paymentObject->getAmount(),
-				$paymentObject->getAccountNumberSource(),
-				$paymentObject->getAccountNumberDest());
-				
-			// Debtor name ans city
-			if (strtoupper($this->_TransactionType) == "DEBTOR")
-			{
-				//name of debtor (0110)
-				$text .= $this->writeNaambetalerInfo($paymentObject->getName());
-
-				//city of debtor (0113)
-				$text .= $this->writeWoonplaatsbetalerInfo($paymentObject->getCity());
-			}
-			
-			//betalings kenmerk (0150)
-			$text .= $this->writeBetalingskenmerkInfo($paymentObject->getInvoiceReference());
-			
-			//maximum 4 description lines (0160)
-			$descArray = $paymentObject->getDescription();
-			while(list($id,$desc) = each($descArray))
-			{	
-				$text .= $this->writeOmschrijvingInfo($desc);	
-			}
-			
-			//routine splits here into creditor and debtor
-			if (strtoupper($this->_TransactionType) == "CREDITOR")
-			{
-					//name of creditor (0170)
-					$text .= $this->writeNaambegunstigdeInfo($paymentObject->getName());
-			
-					//city of creditor (0173)
-					$text .= $this->writeWoonplaatsbegunstigdeInfo($paymentObject->getCity());
-			}
-			
-			//do some calculations
-			$this->_NumberOfTransactions++;
-			//accoutnumber checksum
-			$this->_AccountChecksum += (int)$paymentObject->getAccountNumberSource() + (int)$paymentObject->getAccountNumberDest();
-			$this->_TotalAmount += $paymentObject->getAmount();
+			return PEAR::raiseError('Payment object cannot be null');
 		}
+		
+		//Only one type of transaction is allowed in a clieop
+		if ($this->_TransactionType != $paymentObject->getPaymentType())
+		{
+			return PEAR::raiseError('Payment transaction type does not match Clieop transaction type');
+		}
+		
+		//Check if amount in transaction is valid (must be > 0)
+		$paymentAmount = $paymentObject->getAmount();
+		if ($paymentAmount < 0) {
+			return PEAR::raiseError('Payment amount cannot be negative: ' . $paymentAmount);
+		} elseif ($paymentAmount == 0) {
+			return PEAR::raiseError('Payment amount must be nonzero: ' . $paymentAmount);
+		}
+		
+		//transactieinfo (0100)
+		$text = $this->writeTransactieInfo($paymentObject->getTransactionType(),
+			$paymentObject->getAmount(),
+			$paymentObject->getAccountNumberSource(),
+			$paymentObject->getAccountNumberDest());
+			
+		// Debtor name and city
+		if (strtoupper($this->_TransactionType) == "DEBTOR")
+		{
+			// name of debtor (0110)
+			$text .= $this->writeNaambetalerInfo($paymentObject->getName());
+			// city of debtor (0113)
+			$text .= $this->writeWoonplaatsbetalerInfo($paymentObject->getCity());
+		}
+		
+		// betalingskenmerk (0150)
+		$text .= $this->writeBetalingskenmerkInfo($paymentObject->getInvoiceReference());
+		
+		// maximum 4 description lines (0160)
+		$descArray = $paymentObject->getDescription();
+		while(list($id,$desc) = each($descArray))
+		{	
+			$text .= $this->writeOmschrijvingInfo($desc);	
+		}
+		
+		//routine splits here into creditor and debtor
+		if (strtoupper($this->_TransactionType) == "CREDITOR")
+		{
+			//name of creditor (0170)
+			$text .= $this->writeNaambegunstigdeInfo($paymentObject->getName());
+		
+			//city of creditor (0173)
+			$text .= $this->writeWoonplaatsbegunstigdeInfo($paymentObject->getCity());
+		}
+		
+		//do some calculations
+		$this->_NumberOfTransactions++;
+		//accoutnumber checksum
+		$this->_AccountChecksum += (int)$paymentObject->getAccountNumberSource() + (int)$paymentObject->getAccountNumberDest();
+		$this->_TotalAmount += $paymentObject->getAmount();
 		$this->_TransactionText .= $text;
+		
+		//successful
+		return true;
 	}
 	
 	/**
 	* Writes complete clieop file
 	* @access public
-	* @return string
+	* @return mixed string containing clieop batch, or PEAR_Error object
 	*/
 	function writeClieop()
 	{
+		if ($this->_NumberOfTransactions == 0)
+		{
+			return PEAR::raiseError('No transactions have been added to this Clieop batch');
+		}
+			
 		$text  = $this->writeBestandsvoorloopInfo($this->_SenderIdent, $this->_BatchNumber);
 		$text .= $this->writeBatchvoorloopInfo($this->_PrincipalAccountNumber, $this->_BatchNumber);
 		$text .= $this->writeVasteomschrijvingInfo($this->_FixedDescription);
