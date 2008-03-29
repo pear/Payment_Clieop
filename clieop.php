@@ -633,7 +633,27 @@ class ClieopPayment extends clieop_baseobject
 */
 class clieop_baseobject
 {
-
+	/**
+	* @var string
+	* @access private
+	*/
+	var $_NewLine = "\n";
+	
+	/**
+	* property NewLine
+	* @param string Value   - New line character to use in Clieop output (defaults to "\n"; some banks require "\r\n")
+	* @return string
+	* @access public
+	*/
+	function getNewLine()
+	{
+		return $this->_NewLine;
+	}
+	function setNewLine($Value)
+	{
+		$this->_NewLine = $Value;
+	}	
+	
 	/**
 	* Alfa numeric filler
 	* @param string text	- Text which needs to filled up
@@ -675,7 +695,7 @@ class clieop_baseobject
 	*/
 	function filler($Length)
 	{
-		return str_repeat(" ", $Length) . "\n";
+		return str_repeat(" ", $Length) . $this->_NewLine;
 	}
 }
 
