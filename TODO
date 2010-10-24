@@ -1,0 +1,11 @@
+This is the TODO list for clieop development
+
+Version 0.2:
+- Split up clieopPayment into clieopHeader and clieopBatch (support for multiple batches)
+- Try to keep clieopPayment for compabilty and single batch clieops
+- Support for process date. Maximum 30 days in the future.
+- Create extra chapters for clieopBatch and ClieopHeader (docu)
+- Create Entrust mandate class. This class should create a mandate based on clieopPayment or clieopHeader class (After $object->writeClieop)
+
+
+
