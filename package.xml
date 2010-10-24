@@ -11,7 +11,7 @@
   <active>yes</active>
  </lead>
  <date>2010-10-25</date>
- <time>07:50:12</time>
+ <time>07:58:04</time>
  <version>
   <release>0.2.0</release>
   <api>0.2.0</api>
@@ -20,7 +20,7 @@
   <release>beta</release>
   <api>stable</api>
  </stability>
- <license uri="http://www.php.net/license">PHP</license>
+ <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
  <notes>
 QA release
 Fixed class naming to be as per pear standards
@@ -35,10 +35,10 @@ Bug #13476 	New line character must be selectable
  <contents>
   <dir baseinstalldir="/" name="/">
    <file baseinstalldir="/" md5sum="072f359c9d43e2efbc05f716f98c8cc0" name="docs/API" role="doc" />
-   <file baseinstalldir="/" md5sum="489fce9561fea2cf23a2c38489315b6f" name="docs/creditor.php" role="doc" />
-   <file baseinstalldir="/" md5sum="ff37d53dec3495386408b02d943218b2" name="docs/debtor.php" role="doc" />
-   <file baseinstalldir="/" md5sum="109bcb296583da70adc419b567b5a5ad" name="Payment/Clieop.php" role="php" />
-   <file baseinstalldir="/" md5sum="beba5f91f6cde74893c94b25c7d7e801" name="Payment/Clieop/Transaction.php" role="php" />
+   <file baseinstalldir="/" md5sum="0c60214429bdb414edff5a383b00730b" name="docs/creditor.php" role="doc" />
+   <file baseinstalldir="/" md5sum="d39f9d072157f1457635269f1dc81524" name="docs/debtor.php" role="doc" />
+   <file baseinstalldir="/" md5sum="d3c4010100404f4d304fa9369d22e118" name="Payment/Clieop.php" role="php" />
+   <file baseinstalldir="/" md5sum="a8e2f296dca30a1570ba06d5944a3029" name="Payment/Clieop/Transaction.php" role="php" />
    <file baseinstalldir="/" md5sum="2237d7cb581443e186b62cc3e708be92" name="README" role="data" />
    <file baseinstalldir="/" md5sum="2a3b32f0859e863fa15509c9e81f2f3e" name="TODO" role="data" />
   </dir>
@@ -97,7 +97,7 @@ Please note that public function names are partly in Dutch. This is because also
     <api>stable</api>
    </stability>
    <date>2010-10-25</date>
-   <license uri="http://www.php.net/license">PHP</license>
+   <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD Style</license>
    <notes>
 QA release
 Fixed class naming to be as per pear standards
