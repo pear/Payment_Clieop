@@ -4,12 +4,12 @@
 *
 * $Revision$
 */
-include_once("Payment_Clieop/clieop.php");
-include_once("Payment_Clieop/clieop_transaction.php");
+include_once("Payment/Clieop.php");
+include_once("Payment/Clieop/Transaction.php");
 
 header("Content-type: text/plain");
 
-$clieopFile = new ClieopPayment();
+$clieopFile = new Payment_Clieop();
 
 //set clieop properties
 $clieopFile->setTransactionType(CLIEOP_TRANSACTIE_INCASSO);		// debtor transactions
@@ -21,7 +21,7 @@ $clieopFile->setTest(true);										// Test clieop
 
 
 //create debtor
-$debtor = new TransactionPayment(CLIEOP_TRANSACTIE_INCASSO);
+$debtor = new Payment_Clieop_Transaction(CLIEOP_TRANSACTIE_INCASSO);
 $debtor->setAccountNumberSource("192837346");					// my bank account number
 $debtor->setAccountNumberDest("123456789");						// principal bank account number
 $debtor->setAmount(12995);										// amount in Eurocents (EUR 129.95)

@@ -4,12 +4,12 @@
 *
 * $Revision$
 */
-include_once("Payment_Clieop/clieop.php");
-include_once("Payment_Clieop/clieop_transaction.php");
+include_once("Payment/Clieop.php");
+include_once("Payment/Clieop/Transaction.php");
 
 header("Content-type: text/plain");
 
-$clieopFile = new ClieopPayment();
+$clieopFile = new Payment_Clieop();
 
 //set clieop properties
 $clieopFile->setTransactionType(CLIEOP_TRANSACTIE_BETALING);	// debtor transactions
@@ -21,7 +21,7 @@ $clieopFile->setTest(true);										// Test clieop
 
 
 //create creditor
-$creditor = new TransactionPayment(CLIEOP_TRANSACTIE_BETALING);
+$creditor = new Payment_Clieop_Transaction(CLIEOP_TRANSACTIE_BETALING);
 $creditor->setAccountNumberSource("192837346");					// my bank account number
 $creditor->setAccountNumberDest("123456789");					// principal bank account number
 $creditor->setAmount(6900);										// amount in Eurocents (EUR 69.00)
@@ -45,4 +45,3 @@ if (PEAR::isError($result))
 
 echo $result;
 
-?>

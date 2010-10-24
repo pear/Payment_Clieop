@@ -39,7 +39,7 @@ require_once 'PEAR.php';
  * @author Dave Mertens <dmertens@zyprexia.com>
  * @package Payment_Clieop
  */
-class ClieopPayment extends clieop_baseobject
+class Payment_Clieop
 {
 	/**
 	* @var string
@@ -130,7 +130,7 @@ class ClieopPayment extends clieop_baseobject
 	* @return void
 	* @access public
 	*/
-	function clieopPayment()
+	function __construct()
 	{
 		//init vars
 		$this->_ProcessDate = "000000";	//process ASAP
@@ -620,19 +620,8 @@ class ClieopPayment extends clieop_baseobject
 		//return clieop line
 		return $text;
 	}
-}
 
 
-/**
-*	master object for clieop objects
-*
-* @version $Revision$
-* @access private
-* @author Dave Mertens <dmertens@zyprexia.com>
-* @package Payment_Clieop
-*/
-class clieop_baseobject
-{
 	/**
 	* @var string
 	* @access private

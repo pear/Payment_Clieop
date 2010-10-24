@@ -45,7 +45,7 @@ define( "CLIEOP_TRANSACTIE_BETALING", "00" ); 	//betaling transaction type (cred
 * @package Payment_Clieop
 * @author Dave Mertens <dmertens@zyprexia.com>
 */
-class TransactionPayment
+class Payment_Clieop_Transaction
 {
 	/**
 	* @var string
@@ -115,7 +115,7 @@ class TransactionPayment
 	* @return void
 	* @access public
 	*/
-	function TransactionPayment($transactionType)
+	function __construct($transactionType)
 	{
 		$this->_Description = array();
 		if ($transactionType == "00")
@@ -264,5 +264,3 @@ class TransactionPayment
 	}
 }
 
-
-?>
