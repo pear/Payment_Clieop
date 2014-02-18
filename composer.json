@@ -8,7 +8,7 @@
     ],
     "autoload": {
         "psr-0": {
-            "Payment_Clieop": "./"
+            "Payment": "./"
         }
     },
     "description": "More info available on: http://pear.php.net/package/Payment_Clieop",
